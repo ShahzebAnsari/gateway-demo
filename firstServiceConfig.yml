@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: first-service-greeting
+          uri: https://localhost:8081/
+          predicates:
+            - Path= /firstService/greeting
+            - Query= name, [a-zA-Z]+
+            - Method= GET
+          filters:
+            - AddRequestHeader= request_header1, header_value1
+            - AddRequestParameter= name1, abc
+        - id: first-service-headers
+          uri: https://localhost:8081/
+          predicates:
+            - Path= /firstService/headers
+            - Method= GET
+          filters:
+            - AddRequestHeader= request_header1, header_value1
+            - AddRequestHeader= request_header2, header_value2
